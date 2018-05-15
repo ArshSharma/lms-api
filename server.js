@@ -9,8 +9,13 @@ app.use(express.urlencoded({
   extended: true
 }))
 
+var port = Number(process.env.PORT || 2020);
 
-
+app.use("/", express.static(path.join(__dirname, "public")));
 app.use('/',require('./routes/api').route)
-
-app.listen(2020,()=> console.log("connected to http://localhost:2020"))
+app.use('/', (req,res)=>{
+  res.redirect('notFound.html')  
+})
+var server = app.listen(port, () => {
+  console.log("Server is running at http://localhost:" + port);
+})
