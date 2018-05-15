@@ -2,12 +2,14 @@ const Sequelize = require('sequelize')
 
 const db = new Sequelize('lms','user','root',{
   host:'localhost',
-  dialect:'mysql',
-  operatorsAliases: false
+  dialect:'sqlite',
+  operatorsAliases: false,
+  storage: './lms.db'
   // pool:{
   //   min:0,
   //   max:5,
   // }
+  
 })
 
 const Course = db.define('courses',{
