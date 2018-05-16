@@ -19,7 +19,7 @@ route.get('/', (req, res) => {
 //Post request
 route.post('/', (req, res) => {
     Subject.create({
-        name: req.body.name
+        name: req.query.name
     }).then((subjects) => {
         res.status(201).send(subjects)
     }).catch((err) => {
@@ -77,9 +77,9 @@ route.delete('/:id', (req, res) => {
 // update with id
 route.put('/:id', (req, res) => {
     Subject.update({
-        name: req.body.name},
+        name: req.query.name},
         {where: [{id: req.params.id}]})
-        .then(res.status(200).send("Record name updated to " + req.body.name)
+        .then(res.status(200).send("Record name updated to " + req.query.name)
         ).catch((err) => {
             res.status(501).send({ error: "Could not add delete records" })
         })
@@ -118,7 +118,7 @@ route.post('/:id/teachers', (req, res) => {
     }).then((subjects) => {
         if(subjects){
         Teacher.create({
-            name: req.body.name,
+            name: req.query.name,
         }).then(teachers => {
             teachers.setSubject(subjects, { save: false })
             teachers.save()

@@ -31,7 +31,7 @@ route.get('/', (req, res) => {
 //Post request
 route.post('/', (req, res) => {
     Course.create({
-        name: req.body.name
+        name: req.query.name
     }).then((courses) => {
         res.status(201).send(courses)
     }).catch((err) => {
@@ -93,9 +93,9 @@ route.delete('/:id', (req, res) => {
 // update with id
 route.put('/:id', (req, res) => {
     Course.update({
-        name: req.body.name},
+        name: req.query.name},
         {where: [{id: req.params.id}]})
-        .then(res.status(200).send("Record name updated to " + req.body.name)
+        .then(res.status(200).send("Record name updated to " + req.query.name)
         ).catch((err) => {
             res.status(501).send({ error: "Could not add delete records" })
         })
@@ -132,7 +132,7 @@ route.post('/:id/batches', (req, res) => {
 
     }).then((courses) => {
         Batch.create({
-            name: req.body.name,
+            name: req.query.name,
         }).then(batches => {
             batches.setCourse(courses, { save: false })
             batches.save()
@@ -186,10 +186,10 @@ route.get('/:id/batches/:bid', (req, res) => {
 // update with courses/id/batches/id
 route.put('/:id/batches/:bid', (req, res) => {
     Batch.update({
-        name: req.body.name},
+        name: req.query.name},
         {where: [{id: req.params.bid,
         courseId: req.params.id}]})
-        .then(res.status(200).send("Record name updated to " + req.body.name)
+        .then(res.status(200).send("Record name updated to " + req.query.name)
         ).catch((err) => {
             res.status(501).send({ error: "Could not add delete records" })
         })
@@ -258,11 +258,11 @@ route.put('/:id/batches/:bid/lectures/:lid', (req, res) => {
     }).then((batches) => {
         if(batches){
         Lecture.update({
-            name: req.body.name},
+            name: req.query.name},
             {where: [{id: req.params.lid,
             batchId: req.params.bid}]})
         .then(lectures=>{
-            res.status(200).send("Lecture name updated to "+ req.body.name)
+            res.status(200).send("Lecture name updated to "+ req.query.name)
         })
         .catch((err)=>{
             error: "could not get lectures"
@@ -383,7 +383,7 @@ route.post('/:id/batches/:bid/lectures', (req, res) => {
     }).then((batches) => {
         if(batches){
             Lecture.create({
-                name: req.body.name,
+                name: req.query.name,
                 }).then((lectures) => {
 
                 lectures.setBatch(batches,{save:false})
@@ -481,7 +481,7 @@ route.post('/:id/batches/:bid/students', (req, res) => {
     }).then((batches) => {
         if(batches){
             Student.create({
-                name: req.body.name,
+                name: req.query.name,
                 }).then((students) => {
                     console.log("getting students")
                 students.setBatch(batches,{save:false})
@@ -645,7 +645,7 @@ route.post('/:id/batches/:bid/teachers', (req, res) => {
         if(batches){
             batches.getLecture().then((lectures)=>{
             Teacher.create({
-                name: req.body.name,
+                name: req.query.name,
                 }).then((teachers) => {
                     console.log("getting students")
                 students.setLecture(lectures,{save:false})
