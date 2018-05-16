@@ -6,7 +6,7 @@ var http=require('http')
 
 
 
-// get request 
+// get request
 route.get('/', (req, res) => {
     console.log("getting students")
     Student.findAll()
@@ -24,7 +24,7 @@ route.get('/', (req, res) => {
 //Post request
 route.post('/', (req, res) => {
     Student.create({
-        name: req.body.name
+        name: req.query.name
     }).then((students) => {
         res.status(201).send(students)
     }).catch((err) => {
@@ -56,7 +56,7 @@ route.get('/:id', (req, res) => {
         where: [{
             id: req.params.id
         }],
-        
+
     })
         .then((students) => {
             res.status(200).send(students)
@@ -83,9 +83,9 @@ route.delete('/:id', (req, res) => {
 // update with id
 route.put('/:id', (req, res) => {
     Student.update({
-        name: req.body.name},
+        name: req.query.name},
         {where: [{id: req.params.id}]})
-        .then(res.status(200).send("Record name updated to " + req.body.name)
+        .then(res.status(200).send("Record name updated to " + req.query.name)
         ).catch((err) => {
             res.status(501).send({ error: "Could not add delete records" })
         })
